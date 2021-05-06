@@ -145,10 +145,18 @@ function App() {
               )}
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-600 transition duration-150 w-full rounded-md my-4 py-2 font-semibold text-gray-100"
+                className="bg-blue-500 hover:bg-blue-600 transition duration-150 w-full rounded-md mt-4 mb-2 py-2 font-semibold text-gray-100"
               >
                 Search Slots
               </button>
+              <a
+                href="https://github.com/sdawn29/vaccinator.git"
+                target="_blank"
+                rel="noreferrer"
+                className=" text-3xl text-gray-600 hover:text-gray-400"
+              >
+                <i class="fab fa-github-square"></i>
+              </a>
             </form>
           </div>
         </div>
