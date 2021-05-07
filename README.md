@@ -29,12 +29,12 @@ npm run test
 
 👤 **Snehasish Dawn**
 
-* Github: [@sdawn29](https://github.com/sdawn29)
-* LinkedIn: [@snehasishdawn](https://linkedin.com/in/snehasishdawn)
+- Github: [@sdawn29](https://github.com/sdawn29)
+- LinkedIn: [@snehasish-dawn](https://linkedin.com/in/snehasish-dawn)
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sdawn29/vaccinator/issues). 
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sdawn29/vaccinator/issues).
 
 ## Show your support
 
