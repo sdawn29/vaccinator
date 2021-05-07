@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Datepicker from "./Datepicker";
 
-export default function Slots({ data }) {
+export default function Slots({ data, getBackHandler }) {
   const sessions = [];
   const date = new Date();
   const currentDate = `${("0" + date.getDate()).slice(-2)}-${(
@@ -13,13 +13,16 @@ export default function Slots({ data }) {
   data.map((d) => sessions.push(d.sessions));
 
   const selectedDay = (val) => {
-    console.log(val);
     const currentDate = `${("0" + val.getDate()).slice(-2)}-${(
       "0" +
       (val.getMonth() + 1)
     ).slice(-2)}-${val.getFullYear()}`;
     setSelectedDate(currentDate);
   };
+
+  function backHandler() {
+    getBackHandler("Home");
+  }
 
   const freeStyle =
     "bg-green-50 text-green-600 rounded px-2 font-semibold inline-block mt-2 mr-2";
@@ -34,7 +37,15 @@ export default function Slots({ data }) {
   return data.length !== 0 ? (
     <div>
       <div className="sticky top-0 bg-white py-4 border-b shadow px-4 rounded-lg border">
-        <div className="text-2xl font-semibold">{data[0].district_name}</div>
+        <div className="text-2xl font-semibold">
+          <span
+            className="mr-2  cursor-pointer text-gray-400 transition duration-300 hover:text-gray-600"
+            onClick={backHandler}
+          >
+            <i className="fas fa-arrow-left"></i>
+          </span>
+          {data[0].district_name}
+        </div>
         <Datepicker getSelectedDay={selectedDay} />
       </div>
       <div>
