@@ -10,6 +10,7 @@ function App() {
   const [districtId, setDistrictId] = useState();
   const [slotsData, setSlotsData] = useState([]);
   const [pincode, setPincode] = useState();
+  const [screen, setScreen] = useState("Home");
 
   useEffect(() => {
     async function fetchStatesData() {
@@ -53,8 +54,13 @@ function App() {
   }
 
   function handleSubmit(e) {
+    setScreen("Slots");
     e.preventDefault();
     fetchSlotsData();
+  }
+
+  function goBack(val) {
+    setScreen(val);
   }
 
   const selectorStyle =
@@ -64,107 +70,111 @@ function App() {
 
   return (
     <div className="App h-screen flex">
-      <div className="m-auto flex h-2/3">
-        <div className="p-4 rounded-lg flex-shrink-0 w-96 mx-4">
-          <div className="text-4xl font-bold text-gray-700 mb-4">
-            <span className="bg-purple-100 px-4 py-3 mr-2 border-purple-200 border text-2xl rounded-lg">
-              <i className="fas fa-syringe text-purple-700"></i>
-            </span>
-            Vaccinator
-          </div>
-          <div className="w-3/4 mb-4">
-            Enter your location • Search for vaccination slots
-          </div>
-
-          <div className="flex gap-2">
-            <div
-              className={isDistrict ? selectorActive : selectorStyle}
-              onClick={() => setIsDistrict(!isDistrict)}
-            >
-              District
+      {screen === "Home" ? (
+        <div className="m-auto flex h-2/3">
+          <div className="p-4 rounded-lg flex-shrink-0 w-96 mx-4">
+            <div className="text-4xl font-bold text-gray-700 mb-4">
+              <span className="bg-purple-100 px-4 py-3 mr-2 border-purple-200 border text-2xl rounded-lg">
+                <i className="fas fa-syringe text-purple-700"></i>
+              </span>
+              Vaccinator
             </div>
-            <div
-              className={!isDistrict ? selectorActive : selectorStyle}
-              onClick={() => setIsDistrict(!isDistrict)}
-            >
-              Pincode
+            <div className="w-3/4 mb-4">
+              Enter your location • Search for vaccination slots
             </div>
-          </div>
 
-          <div>
-            <form onSubmit={handleSubmit}>
-              {isDistrict ? (
-                <div>
-                  <div className="mb-4">
+            <div className="flex gap-2">
+              <div
+                className={isDistrict ? selectorActive : selectorStyle}
+                onClick={() => setIsDistrict(!isDistrict)}
+              >
+                District
+              </div>
+              <div
+                className={!isDistrict ? selectorActive : selectorStyle}
+                onClick={() => setIsDistrict(!isDistrict)}
+              >
+                Pincode
+              </div>
+            </div>
+
+            <div>
+              <form onSubmit={handleSubmit}>
+                {isDistrict ? (
+                  <div>
+                    <div className="mb-4">
+                      <select
+                        name="cars"
+                        id="cars"
+                        className="w-full py-2 px-4 border rounded-lg bg-gray-100"
+                        onChange={fetchDistrictData}
+                      >
+                        <option value="" disabled selected>
+                          Select State
+                        </option>
+                        {statesData.map((state) => (
+                          <option value={state.state_id} key={state.state_id}>
+                            {state.state_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                     <select
                       name="cars"
                       id="cars"
                       className="w-full py-2 px-4 border rounded-lg bg-gray-100"
-                      onChange={fetchDistrictData}
+                      onChange={(e) => setDistrictId(e.target.value)}
                     >
                       <option value="" disabled selected>
-                        Select State
+                        Select District
                       </option>
-                      {statesData.map((state) => (
-                        <option value={state.state_id} key={state.state_id}>
-                          {state.state_name}
+                      {districtData.map((district) => (
+                        <option
+                          value={district.district_id}
+                          key={district.district_id}
+                        >
+                          {district.district_name}
                         </option>
                       ))}
                     </select>
                   </div>
-                  <select
-                    name="cars"
-                    id="cars"
-                    className="w-full py-2 px-4 border rounded-lg bg-gray-100"
-                    onChange={(e) => setDistrictId(e.target.value)}
-                  >
-                    <option value="" disabled selected>
-                      Select District
-                    </option>
-                    {districtData.map((district) => (
-                      <option
-                        value={district.district_id}
-                        key={district.district_id}
-                      >
-                        {district.district_name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ) : (
-                <div>
-                  <input
-                    type="number"
-                    name=""
-                    id=""
-                    placeholder="Enter pincode"
-                    className="w-full py-2 px-4 border rounded-lg bg-gray-100"
-                    onChange={(e) => setPincode(e.target.value)}
-                  />
-                </div>
-              )}
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-600 transition duration-150 w-full rounded-md mt-4 mb-2 py-2 font-semibold text-gray-100"
-              >
-                Search Slots
-              </button>
-              <a
-                href="https://github.com/sdawn29/vaccinator.git"
-                target="_blank"
-                rel="noreferrer"
-                className=" text-3xl text-gray-600 hover:text-gray-400"
-              >
-                <i class="fab fa-github-square"></i>
-              </a>
-            </form>
+                ) : (
+                  <div>
+                    <input
+                      type="number"
+                      name=""
+                      id=""
+                      placeholder="Enter pincode"
+                      className="w-full py-2 px-4 border rounded-lg bg-gray-100"
+                      onChange={(e) => setPincode(e.target.value)}
+                    />
+                  </div>
+                )}
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-600 transition duration-150 w-full rounded-md mt-4 mb-2 py-2 font-semibold text-gray-100"
+                >
+                  Search Slots
+                </button>
+                <a
+                  href="https://github.com/sdawn29/vaccinator.git"
+                  target="_blank"
+                  rel="noreferrer"
+                  className=" text-3xl text-gray-600 hover:text-gray-400"
+                >
+                  <i className="fab fa-github-square"></i>
+                </a>
+              </form>
+            </div>
           </div>
         </div>
-
-        <div className="px-4 rounded-lg mx-4 flex-shrink-0 w-96 overflow-y-auto">
-          <Slots data={slotsData}></Slots>
+      ) : (
+        <div className="m-auto flex h-2/3">
+          <div className="px-4 rounded-lg mx-4 flex-shrink-0 w-96 overflow-y-auto">
+            <Slots data={slotsData} getBackHandler={goBack}></Slots>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
